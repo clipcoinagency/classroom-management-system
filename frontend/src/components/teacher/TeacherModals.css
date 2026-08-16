@@ -1,0 +1,139 @@
+.teacher-modal {
+  width: 100%;
+  max-width: 520px;
+  padding: 32px;
+  animation: modal-in 0.2s ease both;
+}
+
+.teacher-modal-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.teacher-modal-section {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.teacher-modal-section label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.teacher-modal-section input,
+.teacher-modal-section textarea {
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  background: var(--color-neutral-bg);
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--color-text);
+}
+
+.teacher-modal-section textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.teacher-modal-section input:focus,
+.teacher-modal-section textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  background: var(--color-surface);
+}
+
+.priority-selector {
+  display: flex;
+  gap: 10px;
+}
+
+.priority-option {
+  flex: 1;
+  justify-content: center;
+  padding: 10px 0;
+  font-size: 0.85rem;
+  cursor: pointer;
+  border: 2px solid transparent;
+  opacity: 0.55;
+  transition: opacity 0.15s ease, border-color 0.15s ease;
+}
+
+.priority-option-active {
+  opacity: 1;
+  border-color: currentColor;
+}
+
+.teacher-modal-dropzone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 24px;
+  border-radius: 14px;
+  border: 2px dashed var(--color-primary);
+  background: var(--color-primary-light);
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.teacher-modal-dropzone:hover,
+.teacher-modal-dropzone-active {
+  background: var(--color-info-bg);
+  border-color: var(--color-primary-dark);
+}
+
+.teacher-modal-error {
+  margin-top: 16px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: var(--color-danger-bg);
+  color: var(--color-danger-text);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.teacher-modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.teacher-modal-cancel-btn {
+  padding: 14px 24px;
+  border-radius: 12px;
+  border: none;
+  background: var(--color-neutral-bg);
+  color: var(--color-text);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.teacher-modal-save-btn {
+  flex: 1;
+  padding: 14px 24px;
+  border-radius: 12px;
+  border: none;
+  background: var(--gradient-primary);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.teacher-modal-save-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.teacher-modal-save-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}

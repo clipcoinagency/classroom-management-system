@@ -1,0 +1,146 @@
+.progress-modal {
+  width: 100%;
+  max-width: 560px;
+  padding: 32px;
+  animation: modal-in 0.2s ease both;
+}
+
+.progress-modal-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.progress-modal-subtitle {
+  margin-top: 4px;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+.progress-modal-section {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.progress-modal-section label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.percentage-selector {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+
+.percentage-btn {
+  padding: 12px 0;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.percentage-btn:hover {
+  transform: translateY(-1px);
+}
+
+.percentage-btn-active {
+  background: var(--gradient-primary);
+  border-color: transparent;
+  color: #fff;
+}
+
+.progress-modal-section textarea {
+  min-height: 80px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  background: var(--color-neutral-bg);
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--color-text);
+  resize: vertical;
+}
+
+.progress-modal-section textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  background: var(--color-surface);
+}
+
+.progress-dropzone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 24px;
+  border-radius: 14px;
+  border: 2px dashed var(--color-primary);
+  background: var(--color-primary-light);
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.progress-dropzone:hover,
+.progress-dropzone-active {
+  background: var(--color-info-bg);
+  border-color: var(--color-primary-dark);
+}
+
+.progress-modal-error {
+  margin-top: 16px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: var(--color-danger-bg);
+  color: var(--color-danger-text);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.progress-modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.progress-cancel-btn {
+  padding: 14px 24px;
+  border-radius: 12px;
+  border: none;
+  background: var(--color-neutral-bg);
+  color: var(--color-text);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.progress-save-btn {
+  flex: 1;
+  padding: 14px 24px;
+  border-radius: 12px;
+  border: none;
+  background: var(--gradient-primary);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.progress-save-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.progress-save-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}

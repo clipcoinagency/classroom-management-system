@@ -1,0 +1,35 @@
+.notice-card {
+  padding: 20px 24px;
+  border-left: 4px solid transparent;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.notice-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.notice-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.notice-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.notice-card-message {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+.notice-card-meta {
+  margin-top: 14px;
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}

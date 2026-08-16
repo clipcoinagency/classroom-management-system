@@ -1,0 +1,226 @@
+.attendance-modal {
+  width: 100%;
+  max-width: 460px;
+  padding: 32px;
+  animation: modal-in 0.2s ease both;
+}
+
+.attendance-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.attendance-modal-logo {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 14px;
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+}
+
+.attendance-modal-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.attendance-modal-subtitle {
+  margin-top: 2px;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
+
+.attendance-video-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+  background: #0b0f1a;
+  overflow: hidden;
+}
+
+.attendance-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1);
+}
+
+.attendance-video-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  opacity: 0.5;
+}
+
+.attendance-face-guide {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 55%;
+  height: 70%;
+  transform: translate(-50%, -50%);
+  border: 2px dashed rgba(34, 211, 238, 0.8);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.attendance-scan-line {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #22d3ee, transparent);
+  box-shadow: 0 0 8px 1px rgba(34, 211, 238, 0.8);
+  animation: scan-sweep 2.4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.attendance-scan-line-fast {
+  animation-duration: 0.7s;
+}
+
+@keyframes scan-sweep {
+  0%,
+  100% {
+    top: 20%;
+  }
+  50% {
+    top: 78%;
+  }
+}
+
+.attendance-corner {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-color: rgba(255, 255, 255, 0.6);
+  border-style: solid;
+  border-width: 0;
+}
+
+.attendance-corner-tl {
+  top: 12px;
+  left: 12px;
+  border-top-width: 3px;
+  border-left-width: 3px;
+  border-top-left-radius: 6px;
+}
+
+.attendance-corner-tr {
+  top: 12px;
+  right: 12px;
+  border-top-width: 3px;
+  border-right-width: 3px;
+  border-top-right-radius: 6px;
+}
+
+.attendance-corner-bl {
+  bottom: 12px;
+  left: 12px;
+  border-bottom-width: 3px;
+  border-left-width: 3px;
+  border-bottom-left-radius: 6px;
+}
+
+.attendance-corner-br {
+  bottom: 12px;
+  right: 12px;
+  border-bottom-width: 3px;
+  border-right-width: 3px;
+  border-bottom-right-radius: 6px;
+}
+
+.attendance-status-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text);
+  text-align: center;
+}
+
+.attendance-status-dot {
+  width: 9px;
+  height: 9px;
+  min-width: 9px;
+  border-radius: 50%;
+}
+
+.attendance-dot-active {
+  background: var(--color-info-text);
+  animation: dot-pulse 1.2s ease-in-out infinite;
+}
+
+.attendance-dot-success {
+  background: var(--color-success-text);
+}
+
+.attendance-dot-error {
+  background: var(--color-danger-text);
+}
+
+@keyframes dot-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.attendance-progress-track {
+  margin-top: 14px;
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--color-neutral-bg);
+  overflow: hidden;
+}
+
+.attendance-progress-fill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--gradient-progress);
+  transition: width 0.4s ease;
+}
+
+.attendance-modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.attendance-cancel-btn {
+  flex: 1;
+  padding: 13px 24px;
+  border-radius: 12px;
+  border: none;
+  background: var(--color-neutral-bg);
+  color: var(--color-text);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.attendance-retry-btn {
+  flex: 1;
+  padding: 13px 24px;
+  border-radius: 12px;
+  border: none;
+  background: var(--gradient-primary);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+}

@@ -1,0 +1,42 @@
+.teacher-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.teacher-btn-secondary,
+.teacher-btn-primary {
+  padding: 12px 20px;
+  border-radius: 12px;
+  border: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.teacher-btn-secondary {
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+}
+
+.teacher-btn-primary {
+  background: var(--gradient-primary);
+  color: #fff;
+}
+
+.teacher-btn-secondary:hover,
+.teacher-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+@media (max-width: 640px) {
+  .teacher-actions {
+    justify-content: stretch;
+  }
+
+  .teacher-btn-secondary,
+  .teacher-btn-primary {
+    flex: 1;
+  }
+}
