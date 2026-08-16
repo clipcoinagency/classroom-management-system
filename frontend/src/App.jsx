@@ -4,7 +4,9 @@ import ProtectedRoute from './routes/ProtectedRoute';
 import StudentDashboard from './pages/StudentDashboard';
 import TeacherDashboard from './pages/TeacherDashboard';
 import NoticesResources from './pages/NoticesResources';
+import Attendance from './pages/Attendance';
 import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 export default function App() {
   return (
@@ -12,6 +14,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route
             path="/dashboard"
             element={
@@ -41,6 +44,14 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <NoticesResources />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/attendance"
+            element={
+              <ProtectedRoute>
+                <Attendance />
               </ProtectedRoute>
             }
           />

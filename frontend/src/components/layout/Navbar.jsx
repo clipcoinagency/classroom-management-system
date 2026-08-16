@@ -1,16 +1,18 @@
-import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import AttendanceModal from '../attendance/AttendanceModal';
 import './Navbar.css';
 
-const STUDENT_HOME = { to: '/dashboard', label: 'Dashboard' };
-const TEACHER_HOME = { to: '/teacher', label: 'Class Overview' };
-
-const SHARED_LINKS = [
+const STUDENT_LINKS = [
+  { to: '/dashboard', label: 'Dashboard' },
   { to: '/resources', label: 'Resources' },
   { to: '/notices', label: 'Notices' },
   { to: '/attendance', label: 'Attendance' },
+];
+
+const TEACHER_LINKS = [
+  { to: '/teacher', label: 'Class Overview' },
+  { to: '/resources', label: 'Resources' },
+  { to: '/notices', label: 'Notices' },
 ];
 
 function getInitials(name) {
@@ -24,9 +26,8 @@ function getInitials(name) {
 export default function Navbar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const [showAttendanceModal, setShowAttendanceModal] = useState(false);
   const isTeacher = user?.role === 'TEACHER';
-  const navLinks = [isTeacher ? TEACHER_HOME : STUDENT_HOME, ...SHARED_LINKS];
+  const navLinks = isTeacher ? TEACHER_LINKS : STUDENT_LINKS;
 
   function handleLogout() {
     logout();
@@ -55,16 +56,6 @@ export default function Navbar() {
       </nav>
 
       <div className="navbar-user">
-        {!isTeacher && (
-          <button
-            type="button"
-            className="navbar-attendance-btn"
-            onClick={() => setShowAttendanceModal(true)}
-            aria-label="Mark Attendance"
-          >
-            📷 <span>Mark Attendance</span>
-          </button>
-        )}
         <span className={`pill navbar-role ${isTeacher ? 'pill-rose' : 'pill-info'}`}>
           {user?.role ?? 'STUDENT'}
         </span>
@@ -75,10 +66,6 @@ export default function Navbar() {
           Logout
         </button>
       </div>
-
-      {showAttendanceModal && (
-        <AttendanceModal onClose={() => setShowAttendanceModal(false)} />
-      )}
     </header>
   );
 }

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { login } from '../api/auth';
 import './Login.css';
@@ -36,24 +36,24 @@ export default function Login() {
   }
 
   return (
-    <div className="login-page">
-      <div className="login-blob login-blob-1" aria-hidden="true" />
-      <div className="login-blob login-blob-2" aria-hidden="true" />
-      <div className="login-blob login-blob-3" aria-hidden="true" />
+    <div className="auth-page">
+      <div className="auth-blob auth-blob-1" aria-hidden="true" />
+      <div className="auth-blob auth-blob-2" aria-hidden="true" />
+      <div className="auth-blob auth-blob-3" aria-hidden="true" />
 
-      <div className="card login-card">
-        <div className="login-header">
-          <span className="login-logo" aria-hidden="true">
+      <div className="card auth-card">
+        <div className="auth-header">
+          <span className="auth-logo" aria-hidden="true">
             🎓
           </span>
           <div>
-            <h1 className="login-title">ClassConnect</h1>
-            <p className="login-subtitle">5th Sem ISE · FSD Class Portal</p>
+            <h1 className="auth-title">ClassConnect</h1>
+            <p className="auth-subtitle">5th Sem ISE · FSD Class Portal</p>
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="login-form">
-          <div className="login-field">
+        <form onSubmit={handleSubmit} className="auth-form">
+          <div className="auth-field">
             <label htmlFor="email">Email Address</label>
             <input
               id="email"
@@ -65,7 +65,7 @@ export default function Login() {
             />
           </div>
 
-          <div className="login-field">
+          <div className="auth-field">
             <label htmlFor="password">Password</label>
             <input
               id="password"
@@ -77,9 +77,9 @@ export default function Login() {
             />
           </div>
 
-          {error && <p className="login-error">{error}</p>}
+          {error && <p className="auth-error">{error}</p>}
 
-          <button type="submit" className="login-submit-btn" disabled={isSubmitting}>
+          <button type="submit" className="auth-submit-btn" disabled={isSubmitting}>
             {isSubmitting ? 'Logging in…' : 'Login to Dashboard →'}
           </button>
         </form>
@@ -92,8 +92,8 @@ export default function Login() {
           🔒 Face login coming soon
         </button>
 
-        <p className="login-footer">
-          New to class? <span className="login-footer-link">Create an account</span>
+        <p className="auth-footer">
+          New to class? <Link to="/signup" className="auth-footer-link">Create an account</Link>
         </p>
       </div>
     </div>
