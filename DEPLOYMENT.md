@@ -22,10 +22,11 @@ Deploy the backend first — you need its live URL before configuring the fronte
 3. Connect your `classroom-management-system` GitHub repo.
 4. Configure the service:
    - **Name**: `classconnect-backend`
-   - **Root Directory**: `backend` — critical; the `pom.xml` lives in the `backend/` subfolder, not the repo root. If you skip this, the build fails immediately with "no pom.xml found."
-   - **Environment**: `Java`
-   - **Build Command**: `mvn clean package -DskipTests`
-   - **Start Command**: `java -jar target/classconnect-backend.jar`
+   - **Root Directory**: `backend` — critical; the `pom.xml` and `Dockerfile` live in the `backend/` subfolder, not the repo root. This also scopes the two fields below to that directory.
+   - **Environment**: `Docker`
+   - **Dockerfile Path**: `Dockerfile` — relative to the Root Directory you just set above, so this is just the filename, *not* `backend/Dockerfile` (that would resolve to `backend/backend/Dockerfile` and fail). Render's own docs confirm Dockerfile Path and Docker Build Context Directory both resolve relative to Root Directory once it's set.
+   - **Docker Build Context Directory**: leave as default — it defaults to your Root Directory (`backend`), which is exactly what the Dockerfile expects (its `COPY pom.xml .` and `COPY src ./src` lines assume the build context is `backend/` itself).
+   - **Build Command** / **Start Command**: leave both blank — the Dockerfile's own `RUN` and `ENTRYPOINT` instructions handle building and starting the app; these fields don't apply when Environment is Docker. Render will build and run the Docker image automatically.
    - **Health Check Path**: `/health` — Render polls this to decide if your service is alive. Without it set, Render falls back to polling `/`, which requires auth and will look unhealthy even when the app is running fine.
 5. Add environment variables (**Environment** tab):
 
@@ -36,7 +37,7 @@ Deploy the backend first — you need its live URL before configuring the fronte
    | `FRONTEND_URL` | Leave this for now — you'll add it after Section 2, once you have your Vercel URL |
 
    Do **not** set a `PORT` variable — Render assigns one automatically and the app reads it.
-6. Click **Deploy**. First build takes roughly 3–5 minutes (Maven downloads dependencies, compiles, packages).
+6. Click **Deploy**. First build takes roughly 4–7 minutes — Render pulls the Maven+JDK build image, downloads dependencies, compiles and packages the jar, then builds the smaller final runtime image on top of `eclipse-temurin:17-jre`. Subsequent builds are faster since Docker caches the dependency-download layer as long as `pom.xml` hasn't changed.
 7. Once live, copy the URL Render gives you, e.g. `https://classconnect-backend.onrender.com`. Confirm it's actually working by visiting `https://classconnect-backend.onrender.com/health` in your browser — you should see `{"status":"ok"}`. If you see anything else, check the Troubleshooting section below before moving on.
 
 ---
@@ -103,6 +104,7 @@ A couple of things worth knowing before this happens:
 - Check Render's **Logs** tab for the service. Look for `Started ClassConnectApplication` — if you don't see it, the app never came up; scroll up for the actual error.
 - If the log shows a MongoDB connection error (`MongoSocketOpenException`, `MongoTimeoutException`): either `MONGODB_URI` isn't set correctly in Render's Environment tab, or your Atlas cluster's Network Access doesn't allow Render's IPs — see Section 1 prerequisites.
 - If the log shows Maven failing immediately with something like "no POM in this directory" or "cannot find pom.xml": confirm **Root Directory** is set to `backend`, not the repo root.
+- If the log shows Docker failing to find the Dockerfile, or `COPY` failing with "file not found" for `pom.xml` or `src`: confirm **Dockerfile Path** is set to just `Dockerfile` (not `backend/Dockerfile`) — it's already relative to Root Directory, so including `backend/` again points at a path that doesn't exist.
 
 **"Frontend shows blank" (white screen)**
 - Open the browser console — a blank page with a JS error usually means the build itself is fine but something crashed at runtime. Check for a stack trace.
