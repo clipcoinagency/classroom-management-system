@@ -17,17 +17,6 @@ RUN mvn clean package -DskipTests
 # --- Stage 2: lightweight runtime image ---
 FROM eclipse-temurin:17-jre
 WORKDIR /app
-
-# Re-sync the JVM's CA trust store with the system's CA certificates. Without
-# this, TLS handshakes to MongoDB Atlas fail with
-# "SSLException: (internal_error) Received fatal alert: internal_error" —
-# a known issue with slim Java runtime images whose cacerts store gets out
-# of sync with the system's ca-certificates package.
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends ca-certificates-java openssl \
-    && update-ca-certificates -f \
-    && rm -rf /var/lib/apt/lists/*
-
 COPY --from=build /app/target/classconnect-backend.jar app.jar
 
 EXPOSE 10000
@@ -35,4 +24,11 @@ EXPOSE 10000
 # Render assigns the real port at runtime via the PORT environment variable,
 # which application.properties already reads (server.port=${PORT:8080}) —
 # EXPOSE here is just documentation, it doesn't itself bind anything.
-ENTRYPOINT ["java", "-jar", "app.jar"]
+#
+# -Djdk.tls.client.protocols=TLSv1.2: this JDK's TLS 1.3 implementation is
+# incompatible with MongoDB Atlas's TLS termination and fails every
+# handshake with "SSLException: (internal_error) Received fatal alert:
+# internal_error" (confirmed against MongoDB's own driver docs — a known
+# JDK/TLS 1.3 interop issue, not a cert-trust or credentials problem).
+# Forcing TLS 1.2 avoids the broken negotiation path entirely.
+ENTRYPOINT ["java", "-Djdk.tls.client.protocols=TLSv1.2", "-jar", "app.jar"]
