@@ -24,14 +24,4 @@ EXPOSE 10000
 # Render assigns the real port at runtime via the PORT environment variable,
 # which application.properties already reads (server.port=${PORT:8080}) —
 # EXPOSE here is just documentation, it doesn't itself bind anything.
-#
-# Every deploy fails identically with "SSLException: (internal_error)
-# Received fatal alert: internal_error" while opening TLS to the Atlas M0
-# (free/shared-tier) cluster, which routes connections through a shared
-# proxy that requires correct SNI. Neither forcing TLS 1.2 nor syncing the
-# CA trust store changed the failure at all, ruling out protocol version
-# and cert trust. -Djava.net.preferIPv4Stack=true forces the JVM to resolve
-# and connect over IPv4 instead of IPv6 — a known source of SNI/handshake
-# oddities on cloud hosts whose containers get IPv6 addresses for outbound
-# hostnames.
-ENTRYPOINT ["java", "-Djava.net.preferIPv4Stack=true", "-Djdk.tls.client.protocols=TLSv1.2", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
