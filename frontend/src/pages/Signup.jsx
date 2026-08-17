@@ -29,6 +29,8 @@ function validate(fields) {
     errors.confirmPassword = 'Passwords do not match';
   }
 
+  if (!fields.role) errors.role = 'Please select a role';
+
   return errors;
 }
 
@@ -38,7 +40,7 @@ export default function Signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [role, setRole] = useState('STUDENT');
+  const [role, setRole] = useState('');
   const [fieldErrors, setFieldErrors] = useState({});
   const [submitError, setSubmitError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -49,7 +51,7 @@ export default function Signup() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const errors = validate({ name, usn, email, password, confirmPassword });
+    const errors = validate({ name, usn, email, password, confirmPassword, role });
     setFieldErrors(errors);
     if (Object.keys(errors).length > 0) return;
 
@@ -98,7 +100,7 @@ export default function Signup() {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Sami Patil"
+                placeholder="Enter your full name"
               />
               {fieldErrors.name && <p className="auth-field-error">{fieldErrors.name}</p>}
             </div>
@@ -110,7 +112,7 @@ export default function Signup() {
                 type="text"
                 value={usn}
                 onChange={(e) => setUsn(e.target.value)}
-                placeholder="ISE-401"
+                placeholder="Enter your roll number"
               />
               {fieldErrors.usn && <p className="auth-field-error">{fieldErrors.usn}</p>}
             </div>
@@ -122,7 +124,7 @@ export default function Signup() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="sami.patil@class.edu"
+                placeholder="Enter your email"
               />
               {fieldErrors.email && <p className="auth-field-error">{fieldErrors.email}</p>}
             </div>
@@ -130,9 +132,13 @@ export default function Signup() {
             <div className="auth-field">
               <label htmlFor="role">Role</label>
               <select id="role" value={role} onChange={(e) => setRole(e.target.value)}>
+                <option value="" disabled>
+                  Select your role
+                </option>
                 <option value="STUDENT">Student</option>
                 <option value="TEACHER">Teacher</option>
               </select>
+              {fieldErrors.role && <p className="auth-field-error">{fieldErrors.role}</p>}
             </div>
 
             <div className="auth-field">
@@ -142,7 +148,7 @@ export default function Signup() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
+                placeholder="Enter your password"
               />
               {fieldErrors.password && <p className="auth-field-error">{fieldErrors.password}</p>}
             </div>
@@ -154,7 +160,7 @@ export default function Signup() {
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="••••••••"
+                placeholder="Confirm your password"
               />
               {fieldErrors.confirmPassword && (
                 <p className="auth-field-error">{fieldErrors.confirmPassword}</p>
