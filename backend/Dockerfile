@@ -17,6 +17,17 @@ RUN mvn clean package -DskipTests
 # --- Stage 2: lightweight runtime image ---
 FROM eclipse-temurin:17-jre
 WORKDIR /app
+
+# Re-sync the JVM's CA trust store with the system's CA certificates. Without
+# this, TLS handshakes to MongoDB Atlas fail with
+# "SSLException: (internal_error) Received fatal alert: internal_error" —
+# a known issue with slim Java runtime images whose cacerts store gets out
+# of sync with the system's ca-certificates package.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends ca-certificates-java openssl \
+    && update-ca-certificates -f \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY --from=build /app/target/classconnect-backend.jar app.jar
 
 EXPOSE 10000
