@@ -25,10 +25,13 @@ EXPOSE 10000
 # which application.properties already reads (server.port=${PORT:8080}) —
 # EXPOSE here is just documentation, it doesn't itself bind anything.
 #
-# -Djdk.tls.client.protocols=TLSv1.2: this JDK's TLS 1.3 implementation is
-# incompatible with MongoDB Atlas's TLS termination and fails every
-# handshake with "SSLException: (internal_error) Received fatal alert:
-# internal_error" (confirmed against MongoDB's own driver docs — a known
-# JDK/TLS 1.3 interop issue, not a cert-trust or credentials problem).
-# Forcing TLS 1.2 avoids the broken negotiation path entirely.
-ENTRYPOINT ["java", "-Djdk.tls.client.protocols=TLSv1.2", "-jar", "app.jar"]
+# Every deploy fails identically with "SSLException: (internal_error)
+# Received fatal alert: internal_error" while opening TLS to the Atlas M0
+# (free/shared-tier) cluster, which routes connections through a shared
+# proxy that requires correct SNI. Neither forcing TLS 1.2 nor syncing the
+# CA trust store changed the failure at all, ruling out protocol version
+# and cert trust. -Djava.net.preferIPv4Stack=true forces the JVM to resolve
+# and connect over IPv4 instead of IPv6 — a known source of SNI/handshake
+# oddities on cloud hosts whose containers get IPv6 addresses for outbound
+# hostnames.
+ENTRYPOINT ["java", "-Djava.net.preferIPv4Stack=true", "-Djdk.tls.client.protocols=TLSv1.2", "-jar", "app.jar"]
